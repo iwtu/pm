@@ -1,0 +1,23 @@
+<html>
+<head>
+    <title>Powerful Medical Interview</title>
+    <!-- <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet"> -->
+</head>
+<body>
+    <H1> Power Medical Interview - Adrián</H1>
+    
+    <form action="/json2xml" method="POST">        
+        <label for="tname">Enter JSON text: </label><br>
+        <textarea id="tname" name="jsontext" rows="10" cols="60"></textarea><br><br>
+        <input type="submit" value="Transform to XML">
+    </form>
+    
+    <br><hr><br>
+
+    <form action="/xml2json" method="POST">        
+        <label for="tname">Enter XML text: </label><br>
+        <textarea id="tname" name="xmltext" rows="10" cols="60"></textarea><br><br>
+        <input type="submit" value="Transform to JSON">
+    </form>
+</body>
+</html>
