@@ -63,6 +63,41 @@ def _is_leaf(obj: object) -> bool:
     else:
         return False
 
-def transform_xml2dict(xml: str) -> Dict:
-    root = ET.fromstring(xml)
+def transform_xml2dict(node: ET.Element) -> Dict:
+
+    key = None
+    value = None
+    tname = node.attrib["type"].lower()
+    if "key" in node.attrib: key = node.attrib["key"]
+    if "value" in node.attrib: value = _get_value(tname, node.attrib["value"])
+
+    if value is not None or tname == "null":
+        return value
+
+    if tname == "list":
+        a = []
+        for child in node:
+            a.append(transform_xml2dict(child))
+        return a
+
+    if tname == "object":
+        d = {}        
+        for child in node:
+            d[child.attrib["key"]] = transform_xml2dict(child)
+        return d
+
+
+def _get_value(typestring: str, valuestring: str):
+    ts = typestring.lower()
+    if ts == "integer":
+        return int(valuestring)
+    elif ts == "float":
+        return float(valuestring)
+    elif ts.startswith("bool"):
+        return bool(valuestring)
+    elif ts == "string":
+        return valuestring
+    elif ts == "null" or ts == "none":
+        return None
     
+
