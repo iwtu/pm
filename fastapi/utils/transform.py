@@ -99,5 +99,8 @@ def _get_value(typestring: str, valuestring: str):
         return valuestring
     elif ts == "null" or ts == "none":
         return None
+    else:
+        logging.warning(f"Unexpected xml type {type} for value {valuestring}")
+        return valuestring
     
 
