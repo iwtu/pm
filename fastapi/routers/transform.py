@@ -1,18 +1,13 @@
-from fastapi import FastAPI, Request, Form, HTTPException
-from fastapi.responses import FileResponse
+from fastapi import APIRouter, Form, HTTPException
 import orjson
 import xml.etree.ElementTree as ET
 
-from utils import transform_json2xml, transform_xml2dict
-
-app = FastAPI()
-
-@app.get("/")
-async def index(request: Request):
-    return FileResponse("static/index.html")
+from utils.transform import transform_json2xml, transform_xml2dict
 
 
-@app.post("/json2xml")
+router = APIRouter()
+
+@router.post("/json2xml")
 async def json2xml(jsontext: str = Form(...)):
     jsondict = {}
     try:
@@ -22,8 +17,7 @@ async def json2xml(jsontext: str = Form(...)):
 
     return transform_json2xml(jsondict)
 
-
-@app.post("/xml2json")    
+@router.post("/xml2json")    
 async def xml2json(xmltext: str = Form(...)):
     
     xmlroot = None
@@ -33,5 +27,3 @@ async def xml2json(xmltext: str = Form(...)):
         raise HTTPException(422, detail="Input is not valid XML string.")
 
     return transform_xml2dict(xmlroot)
-
-    
