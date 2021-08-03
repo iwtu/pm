@@ -1,8 +1,9 @@
+import os
 
-from pydantic import BaseSettings, Field
 
-
-class Settings(BaseSettings):
-    connectionstring: str = Field(..., env='DATABASE_CONNECTIONSTRING')
+class Settings():
+    is_test = False
+    connectionstring: str = os.environ.get('DATABASE_CONNECTIONSTRING', '')
+    #os.environ['DATABASE_CONNECTIONSTRING']    
 
 settings = Settings()

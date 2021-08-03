@@ -2,7 +2,6 @@ from config import settings
 from database import Database
 
 db = Database(settings)
-db.open_connection()
 
 def db_get_text_value(email: str) -> str:
     q = "SELECT value FROM user_values WHERE email = %s"
